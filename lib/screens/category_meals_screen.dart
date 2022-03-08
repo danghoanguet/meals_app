@@ -30,11 +30,13 @@ class CategoryMealsScreen extends StatelessWidget {
         itemCount: categoryMeals.length,
         itemBuilder: (_, index) => Container(
             child: MealItem(
-                imageUrl: categoryMeals[index].imageUrl,
-                title: categoryMeals[index].title,
-                duration: categoryMeals[index].duration,
-                complexity: categoryMeals[index].complexity,
-                affordability: categoryMeals[index].affordability)),
+          imageUrl: categoryMeals[index].imageUrl,
+          title: categoryMeals[index].title,
+          duration: categoryMeals[index].duration,
+          complexity: categoryMeals[index].complexity,
+          affordability: categoryMeals[index].affordability,
+          id: categoryMeals[index].id,
+        )),
       ),
     );
   }
