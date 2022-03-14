@@ -60,15 +60,8 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
           complexity: categoryMeals![index].complexity,
           affordability: categoryMeals![index].affordability,
           id: categoryMeals![index].id,
-          removeMeal: _removeMeal,
         )),
       ),
     );
-  }
-
-  void _removeMeal(String mealId) {
-    setState(() {
-      categoryMeals?.removeWhere((meal) => meal.id == mealId);
-    });
   }
 }

@@ -10,7 +10,7 @@ class MainDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 120,
+            height: MediaQuery.of(context).size.height * 0.25,
             width: double.infinity,
             padding: EdgeInsets.all(20),
             alignment: Alignment.centerLeft,
@@ -25,7 +25,7 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height * 0.025,
           ),
           _buildListTile('Meals', Icons.restaurant, () {
             Navigator.of(context).pushReplacementNamed('/');
