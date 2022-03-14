@@ -60,6 +60,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
           complexity: categoryMeals![index].complexity,
           affordability: categoryMeals![index].affordability,
           id: categoryMeals![index].id,
+          update: () {},
         )),
       ),
     );
