@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/dummy_data.dart';
+import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 
-class CategoryMealsScreen extends StatelessWidget {
+class CategoryMealsScreen extends StatefulWidget {
   // final String categoryId;
   // final String categoryTitle;
   // const CategoryMealsScreen(
@@ -10,15 +11,33 @@ class CategoryMealsScreen extends StatelessWidget {
   //     : super(key: key);
 
   static const routeName = '/category-meals';
+
+  @override
+  State<CategoryMealsScreen> createState() => _CategoryMealsScreenState();
+}
+
+class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
+  bool _didLoaded = false;
+  String? categoryTitle;
+  List<Meal>? categoryMeals;
+
+  @override
+  void didChangeDependencies() {
+    if (!_didLoaded) {
+      final routeArgs =
+          ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+      categoryTitle = routeArgs['title'];
+      final categoryId = routeArgs['id'];
+      categoryMeals = DUMMY_MEALS.where((meal) {
+        return meal.categories.contains(categoryId);
+      }).toList();
+      _didLoaded = true;
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context)?.settings.arguments as Map<String, String>;
-    final categoryTitle = routeArgs['title'];
-    final categoryId = routeArgs['id'];
-    final categoryMeals = DUMMY_MEALS.where((meal) {
-      return meal.categories.contains(categoryId);
-    }).toList();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -27,17 +46,24 @@ class CategoryMealsScreen extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: categoryMeals.length,
+        itemCount: categoryMeals?.length,
         itemBuilder: (_, index) => Container(
             child: MealItem(
-          imageUrl: categoryMeals[index].imageUrl,
-          title: categoryMeals[index].title,
-          duration: categoryMeals[index].duration,
-          complexity: categoryMeals[index].complexity,
-          affordability: categoryMeals[index].affordability,
-          id: categoryMeals[index].id,
+          imageUrl: categoryMeals![index].imageUrl,
+          title: categoryMeals![index].title,
+          duration: categoryMeals![index].duration,
+          complexity: categoryMeals![index].complexity,
+          affordability: categoryMeals![index].affordability,
+          id: categoryMeals![index].id,
+          removeMeal: _removeMeal,
         )),
       ),
     );
+  }
+
+  void _removeMeal(String mealId) {
+    setState(() {
+      categoryMeals?.removeWhere((meal) => meal.id == mealId);
+    });
   }
 }
